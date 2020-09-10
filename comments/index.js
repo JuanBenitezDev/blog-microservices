@@ -26,7 +26,7 @@ app.post("/posts/:id/comments", async (req, res) => {
   commentsByPostId[req.params.id] = comments;
 
   // Emiting event when a new comment is created
-  await axios.post("http://localhost:4005/events", {
+  await axios.post("http://event-bus-srv:4005/events", {
     type: "CommentCreated",
     data: {
       id: commentId,
@@ -53,7 +53,7 @@ app.post("/events", async (req, res) => {
 
     comment.status = status; // It's the same object in memory so we dont need to push it back
 
-    await axios.post("http://localhost:4005/events", {
+    await axios.post("http://event-bus-srv:4005/events", {
       type: "CommentUpdated",
       data: {
         id,
